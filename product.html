@@ -174,15 +174,25 @@ window.addEventListener("scroll", checkScroll);
 window.addEventListener("resize", checkScroll);
 window.addEventListener("load", checkScroll);
 
-// ⚡ 改成滑鼠移入就滾動
-document.getElementById("scrollBox").addEventListener("mouseenter", function() {
+function scrollAction() {
   let arrow = document.getElementById("scrollArrow");
   if (arrow.classList.contains("up")) {
     window.scrollTo({ top: 0, behavior: "smooth" }); // 回頂端
   } else {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // 到頁尾
   }
-});
+}
+
+const box = document.getElementById("scrollBox");
+
+// 桌機 (滑鼠移入)
+box.addEventListener("mouseenter", scrollAction);
+
+// 觸控螢幕 (手指點一下)
+box.addEventListener("touchstart", function(e) {
+  e.preventDefault(); // 避免點擊同時觸發 click
+  scrollAction();
+}, { passive: false });
 </script>
 </head>
 <body>
@@ -229,6 +239,7 @@ document.getElementById("scrollBox").addEventListener("mouseenter", function() {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
