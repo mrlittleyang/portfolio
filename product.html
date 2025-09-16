@@ -155,27 +155,32 @@ function downloadPDF1() {
 }
 </script>
 <script>
-// 偵測滾動位置，切換箭頭方向
-window.addEventListener("scroll", function() {
+function checkScroll() {
   let scrollTop = window.scrollY || document.documentElement.scrollTop;
   let windowHeight = window.innerHeight;
   let docHeight = document.documentElement.scrollHeight;
   let arrow = document.getElementById("scrollArrow");
 
-  if (scrollTop + windowHeight >= docHeight - 5) {
-    arrow.classList.add("up");  // 到頁尾 → 箭頭朝上
+  // 容忍 2px 誤差
+  if (scrollTop + windowHeight >= docHeight - 2) {
+    arrow.classList.add("up");   // 到頁尾 → 箭頭朝上
   } else {
     arrow.classList.remove("up"); // 還沒到底 → 箭頭朝下
   }
-});
+}
 
-// 點擊方框 → 滾動
+// 事件監聽
+window.addEventListener("scroll", checkScroll);
+window.addEventListener("resize", checkScroll);
+window.addEventListener("load", checkScroll);
+
+// 點擊按鈕 → 滾動
 document.getElementById("scrollBox").addEventListener("click", function() {
   let arrow = document.getElementById("scrollArrow");
   if (arrow.classList.contains("up")) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" }); // 回頂端
   } else {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // 到頁尾
   }
 });
 </script>
@@ -224,6 +229,7 @@ document.getElementById("scrollBox").addEventListener("click", function() {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
