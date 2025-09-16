@@ -174,8 +174,8 @@ window.addEventListener("scroll", checkScroll);
 window.addEventListener("resize", checkScroll);
 window.addEventListener("load", checkScroll);
 
-// 點擊按鈕 → 滾動
-document.getElementById("scrollBox").addEventListener("click", function() {
+// ⚡ 改成滑鼠移入就滾動
+document.getElementById("scrollBox").addEventListener("mouseenter", function() {
   let arrow = document.getElementById("scrollArrow");
   if (arrow.classList.contains("up")) {
     window.scrollTo({ top: 0, behavior: "smooth" }); // 回頂端
@@ -229,6 +229,7 @@ document.getElementById("scrollBox").addEventListener("click", function() {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
