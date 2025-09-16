@@ -76,11 +76,36 @@ a.underline {
   display: block;
   margin-top: 30px;
 }
-
-.div1 {
-  flex: 1; /* Adjust as needed */
+/* 右下角的方框 */
+.scroll-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0); /* 透明背景 */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 陰影 */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
+/* 箭頭（用 CSS 畫三角形） */
+.scroll-arrow {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid black; /* 預設箭頭朝下 */
+  transition: transform 0.3s ease;
+}
+
+/* 到頁尾 → 箭頭朝上 */
+.scroll-arrow.up {
+  transform: rotate(180deg);
+}
 
     @media only screen and (max-width: 480px) {
   /* Styles for screens up to 480px wide (e.g., smartphones) */
@@ -129,6 +154,31 @@ function downloadPDF1() {
   window.open(pdfUrl);
 }
 </script>
+<script>
+// 偵測滾動位置，切換箭頭方向
+window.addEventListener("scroll", function() {
+  let scrollTop = window.scrollY || document.documentElement.scrollTop;
+  let windowHeight = window.innerHeight;
+  let docHeight = document.documentElement.scrollHeight;
+  let arrow = document.getElementById("scrollArrow");
+
+  if (scrollTop + windowHeight >= docHeight - 5) {
+    arrow.classList.add("up");  // 到頁尾 → 箭頭朝上
+  } else {
+    arrow.classList.remove("up"); // 還沒到底 → 箭頭朝下
+  }
+});
+
+// 點擊方框 → 滾動
+document.getElementById("scrollBox").addEventListener("click", function() {
+  let arrow = document.getElementById("scrollArrow");
+  if (arrow.classList.contains("up")) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+});
+</script>
 </head>
 <body>
     <img src="fig.jpg" style="width:80%;"><br>
@@ -162,6 +212,10 @@ function downloadPDF1() {
 <button onclick="downloadPDF1()">下載pdf檔</button> 
 </div>
 </div>
+	<div class="scroll-box" id="scrollBox">
+  <div class="scroll-arrow" id="scrollArrow"></div>
+</div>
+
 <div class="contact">
   <h3>聯絡資訊</h3>
   <p>手機：0905102218</p>
@@ -170,5 +224,6 @@ function downloadPDF1() {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
