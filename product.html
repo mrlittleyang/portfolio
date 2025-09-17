@@ -162,19 +162,12 @@ function checkScroll() {
 }
 
 function startScroll() {
+  stopScroll(); // 先清除舊 interval
   const arrow = document.getElementById("scrollArrow");
-  // 先清除之前的滾動 interval
-  clearInterval(scrollInterval);
   if (arrow.classList.contains("up")) {
-    // 箭頭朝上 → 往上滾
-    scrollInterval = setInterval(() => {
-      window.scrollBy(0, -10);
-    }, 16);
+    scrollInterval = setInterval(() => window.scrollBy(0, -10), 16);
   } else {
-    // 箭頭朝下 → 往下滾
-    scrollInterval = setInterval(() => {
-      window.scrollBy(0, 10);
-    }, 16);
+    scrollInterval = setInterval(() => window.scrollBy(0, 10), 16);
   }
 }
 
@@ -197,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 手機觸控長按
   box.addEventListener('touchstart', function(e){
-    e.preventDefault();  // 阻止手機滾動手勢
+    e.preventDefault();        // 阻止系統滾動手勢
     startScroll();
   }, {passive:false});
 
@@ -250,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
