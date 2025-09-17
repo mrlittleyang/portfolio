@@ -73,7 +73,8 @@ a.underline {
   margin-bottom: 15px;
 }
 .container {
-  display: block;
+   display: flex;
+  flex-direction: column; /* 垂直排列 */
   margin-top: 30px;
 }
 #scrollBox {
@@ -118,6 +119,9 @@ a.underline {
     width:90%;
 
   }
+		.container {
+  flex-direction: row; 
+}
 
     
 
@@ -267,6 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
