@@ -76,37 +76,37 @@ a.underline {
   display: block;
   margin-top: 30px;
 }
-/* 右下角的方框 */
-.scroll-box {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0); /* 透明背景 */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* 陰影 */
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+  /* 右下角方框 */
+  #scrollBox {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+  }
 
-/* 箭頭（用 CSS 畫三角形） */
-.scroll-arrow {
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-top: 16px solid black; /* 預設箭頭朝下 */
-  transition: transform 0.3s ease;
-}
+  /* 箭頭樣式 */
+  #scrollArrow {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid black; /* 預設朝下 */
+    transition: transform 0.3s;
+  }
 
-/* 到頁尾 → 箭頭朝上 */
-.scroll-arrow.up {
-  transform: rotate(180deg);
-}
-
+  /* 到底 → 箭頭朝上 */
+  #scrollArrow.up {
+    transform: rotate(180deg);
+  }
     @media only screen and (max-width: 480px) {
   /* Styles for screens up to 480px wide (e.g., smartphones) */
  .header{
@@ -169,11 +169,6 @@ function checkScroll() {
   }
 }
 
-// 事件監聽
-window.addEventListener("scroll", checkScroll);
-window.addEventListener("resize", checkScroll);
-window.addEventListener("load", checkScroll);
-
 function scrollAction() {
   let arrow = document.getElementById("scrollArrow");
   if (arrow.classList.contains("up")) {
@@ -183,16 +178,19 @@ function scrollAction() {
   }
 }
 
+// 綁定滾動偵測
+window.addEventListener("scroll", checkScroll);
+window.addEventListener("resize", checkScroll);
+window.addEventListener("load", checkScroll);
+
+// 同時支援滑鼠點擊 & 觸控點擊
 const box = document.getElementById("scrollBox");
-
-// 桌機 (滑鼠移入)
-box.addEventListener("mouseenter", scrollAction);
-
-// 觸控螢幕 (手指點一下)
-box.addEventListener("touchstart", function(e) {
-  e.preventDefault(); // 避免點擊同時觸發 click
-  scrollAction();
-}, { passive: false });
+["click", "touchstart"].forEach(eventType => {
+  box.addEventListener(eventType, function(e) {
+    e.preventDefault();
+    scrollAction();
+  }, { passive: false });
+});
 </script>
 </head>
 <body>
@@ -239,6 +237,7 @@ box.addEventListener("touchstart", function(e) {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
