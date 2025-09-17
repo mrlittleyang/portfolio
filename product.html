@@ -102,9 +102,8 @@ a.underline {
   transition: transform 0.3s;
 }
 
-/* 到底反轉箭頭 */
 #scrollArrow.up {
-  transform: rotate(180deg); /* 翻轉朝上 */
+  transform: rotate(180deg);
   transform-origin: center center;
 }
     @media only screen and (max-width: 480px) {
@@ -156,29 +155,28 @@ function downloadPDF1() {
 </script>
 <script>
 let scrollInterval;
-let speed = 2;
 let speedTimer;
-let startY = 0;
+let speed = 2;
 
 function checkScroll() {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const windowHeight = window.innerHeight;
   const docHeight = document.documentElement.scrollHeight;
   const arrow = document.getElementById("scrollArrow");
-
   if (scrollTop + windowHeight >= docHeight - 2) {
-    arrow.classList.add("up"); // 到底 → 翻轉
+    arrow.classList.add("up");
   } else {
-    arrow.classList.remove("up"); // 還沒到底 → 初始朝下
+    arrow.classList.remove("up");
   }
 }
 
 function startScroll() {
   stopScroll();
   document.getElementById("scrollBox").classList.add("active");
-  speed = 2;
+  speed = 2; // 重置初始速度
 
   const arrow = document.getElementById("scrollArrow");
+
   scrollInterval = setInterval(() => {
     if (arrow.classList.contains("up")) {
       window.scrollBy(0, -speed);
@@ -186,20 +184,18 @@ function startScroll() {
       window.scrollBy(0, speed);
     }
   }, 16);
+
+  // 每隔 0.5 秒加速
+  speedTimer = setInterval(() => {
+    speed += 1;        // 速度增加
+    if (speed > 50) speed = 50; // 最大速度限制
+  }, 500);
 }
 
 function stopScroll() {
   clearInterval(scrollInterval);
   clearInterval(speedTimer);
   document.getElementById("scrollBox").classList.remove("active");
-}
-
-function touchMoveSpeed(e) {
-  if(e.touches.length > 0) {
-    const currentY = e.touches[0].clientY;
-    const delta = currentY - startY;
-    speed = Math.min(Math.max(Math.abs(delta)/2 + 2, 2), 50);
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -210,33 +206,16 @@ document.addEventListener("DOMContentLoaded", () => {
   checkScroll();
 
   // 桌機滑鼠
-  box.addEventListener('mousedown', function(e){
-    startY = e.clientY;
-    startScroll();
-    box.addEventListener('mousemove', mouseMoveSpeed);
-  });
-  box.addEventListener('mouseup', function(){
-    stopScroll();
-    box.removeEventListener('mousemove', mouseMoveSpeed);
-  });
-  box.addEventListener('mouseleave', function(){
-    stopScroll();
-    box.removeEventListener('mousemove', mouseMoveSpeed);
-  });
-
-  function mouseMoveSpeed(e){
-    const delta = e.clientY - startY;
-    speed = Math.min(Math.max(Math.abs(delta)/2 + 2, 2), 50);
-  }
+  box.addEventListener('mousedown', startScroll);
+  box.addEventListener('mouseup', stopScroll);
+  box.addEventListener('mouseleave', stopScroll);
 
   // 手機觸控
   box.addEventListener('touchstart', function(e){
     e.preventDefault();
-    if(e.touches.length > 0) startY = e.touches[0].clientY;
     startScroll();
   }, {passive:false});
 
-  box.addEventListener('touchmove', touchMoveSpeed, {passive:false});
   box.addEventListener('touchend', stopScroll);
   box.addEventListener('touchcancel', stopScroll);
 });
@@ -288,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
