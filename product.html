@@ -19,21 +19,9 @@ a.underline {
         background-color:blue;
 		
     }
-	.option1{
-        float: left;
-        width:150px;
-    border:2px solid white;
-        text-align:center;
-        margin-top:5px;
-        margin-left:10px;
-        color:white;
-        text-decoration: none;
-        background: linear-gradient(to right, blue, purple);
-        transition: background 0.5s ease;
-		
-	}
-    .option2{
-		 position:absolute;
+	
+    .option{
+		 
         float: left;
         width:150px;
     border:2px solid white;
@@ -52,13 +40,13 @@ a.underline {
 
     
     
-    .option2-cont{
+    .option-cont{
       
        list-style-type:none;
         padding:0;
         display:none;
   }
-   .option2-cont li{
+   .option-cont li{
         background-color:white;
         color: black;
         border:1px solid #808080;
@@ -245,11 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
     <img src="fig.jpg" style="width:80%;"><br>
 <div class="header">
         <div>
-          <a href="index.html" class="option1"><p>首頁</p></a>
+          <a href="index.html" class="option"><p>首頁</p></a>
         </div>
-        <div id="sel" class="option2">
+        <div id="sel" class="option">
             <p>關於我們</p>
-            <ul id="about" class="option2-cont">
+            <ul id="about" class="option-cont">
               <a href="introduction.html"><li>簡介</li></a>
                 <a href="staff.html" ><li>公司人員</li></a>
                 <a href="product.html" ><li>產品訊息</li></a>
@@ -287,6 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
