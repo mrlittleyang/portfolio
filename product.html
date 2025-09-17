@@ -76,37 +76,29 @@ a.underline {
   display: block;
   margin-top: 30px;
 }
-  /* 右下角方框 */
-  #scrollBox {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 9999;
-  }
-
-  /* 箭頭樣式 */
-  #scrollArrow {
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 20px solid black; /* 預設朝下 */
-    transition: transform 0.3s;
-  }
-
-  /* 到底 → 箭頭朝上 */
-  #scrollArrow.up {
-    transform: rotate(180deg);
-  }
+ #scrollBox {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 9999;
+}
+#scrollArrow {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 20px solid black;
+  transition: transform 0.3s;
+}
+#scrollArrow.up { transform: rotate(180deg); }
     @media only screen and (max-width: 480px) {
   /* Styles for screens up to 480px wide (e.g., smartphones) */
  .header{
@@ -155,41 +147,62 @@ function downloadPDF1() {
 }
 </script>
 <script>
+let scrollInterval;
+
 function checkScroll() {
-  let scrollTop = window.scrollY || document.documentElement.scrollTop;
-  let windowHeight = window.innerHeight;
-  let docHeight = document.documentElement.scrollHeight;
-  let arrow = document.getElementById("scrollArrow");
-
-  // 容忍 2px 誤差
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const windowHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+  const arrow = document.getElementById("scrollArrow");
   if (scrollTop + windowHeight >= docHeight - 2) {
-    arrow.classList.add("up");   // 到頁尾 → 箭頭朝上
+    arrow.classList.add("up");
   } else {
-    arrow.classList.remove("up"); // 還沒到底 → 箭頭朝下
+    arrow.classList.remove("up");
   }
 }
 
-function scrollAction() {
-  let arrow = document.getElementById("scrollArrow");
+function startScroll() {
+  const arrow = document.getElementById("scrollArrow");
+  // 先清除之前的滾動 interval
+  clearInterval(scrollInterval);
   if (arrow.classList.contains("up")) {
-    window.scrollTo({ top: 0, behavior: "smooth" }); // 回頂端
+    // 箭頭朝上 → 往上滾
+    scrollInterval = setInterval(() => {
+      window.scrollBy(0, -10);
+    }, 16);
   } else {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // 到頁尾
+    // 箭頭朝下 → 往下滾
+    scrollInterval = setInterval(() => {
+      window.scrollBy(0, 10);
+    }, 16);
   }
 }
 
-// 綁定滾動偵測
-window.addEventListener("scroll", checkScroll);
-window.addEventListener("resize", checkScroll);
-window.addEventListener("load", checkScroll);
+function stopScroll() {
+  clearInterval(scrollInterval);
+}
 
-// 同時支援滑鼠點擊 & 觸控點擊
-const box = document.getElementById("scrollBox");
-["click", "touchstart"].forEach(eventType => {
-  box.addEventListener(eventType, function(e) {
-    e.preventDefault();
-    scrollAction();
-  }, { passive: false });
+document.addEventListener("DOMContentLoaded", () => {
+  const box = document.getElementById("scrollBox");
+
+  // 滾動偵測
+  window.addEventListener('scroll', checkScroll);
+  window.addEventListener('resize', checkScroll);
+  checkScroll();
+
+  // 桌機滑鼠長按/移入
+  box.addEventListener('mousedown', startScroll);
+  box.addEventListener('mouseup', stopScroll);
+  box.addEventListener('mouseleave', stopScroll);
+
+  // 手機觸控長按
+  box.addEventListener('touchstart', function(e){
+    e.preventDefault();  // 阻止手機滾動手勢
+    startScroll();
+  }, {passive:false});
+
+  box.addEventListener('touchend', stopScroll);
+  box.addEventListener('touchcancel', stopScroll);
 });
 </script>
 </head>
@@ -237,6 +250,7 @@ const box = document.getElementById("scrollBox");
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
