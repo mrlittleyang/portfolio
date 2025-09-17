@@ -187,8 +187,8 @@ function startScroll() {
 
   // 每隔 0.5 秒加速
   speedTimer = setInterval(() => {
-    speed += 10;        // 速度增加
-    if (speed > 100) speed = 100; // 最大速度限制
+    speed += 25;        // 速度增加
+    if (speed > 50) speed = 50; // 最大速度限制
   }, 500);
 }
 
@@ -267,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
