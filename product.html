@@ -104,7 +104,7 @@ a.underline {
 
 /* 到底反轉箭頭 */
 #scrollArrow.up {
-  transform: rotate(180deg);
+  transform: rotate(180deg); /* 翻轉朝上 */
   transform-origin: center center;
 }
     @media only screen and (max-width: 480px) {
@@ -158,7 +158,7 @@ function downloadPDF1() {
 let scrollInterval;
 let speed = 2;
 let speedTimer;
-let startY = 0;  // 觸控起點 Y
+let startY = 0;
 
 function checkScroll() {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -169,7 +169,7 @@ function checkScroll() {
   if (scrollTop + windowHeight >= docHeight - 2) {
     arrow.classList.add("up"); // 到底 → 翻轉
   } else {
-    arrow.classList.remove("up"); // 還沒到底
+    arrow.classList.remove("up"); // 還沒到底 → 初始朝下
   }
 }
 
@@ -194,12 +194,11 @@ function stopScroll() {
   document.getElementById("scrollBox").classList.remove("active");
 }
 
-// 控制速度（觸控滑動距離）
 function touchMoveSpeed(e) {
   if(e.touches.length > 0) {
     const currentY = e.touches[0].clientY;
-    const delta = currentY - startY;  // 手指移動距離
-    speed = Math.min(Math.max(Math.abs(delta) / 2 + 2, 2), 50); // 限制速度 2~50
+    const delta = currentY - startY;
+    speed = Math.min(Math.max(Math.abs(delta)/2 + 2, 2), 50);
   }
 }
 
@@ -214,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
   box.addEventListener('mousedown', function(e){
     startY = e.clientY;
     startScroll();
-    // 可用滑鼠移動控制速度
     box.addEventListener('mousemove', mouseMoveSpeed);
   });
   box.addEventListener('mouseup', function(){
@@ -278,7 +276,8 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 	<div id="scrollBox">
   <svg id="scrollArrow" width="24" height="24" viewBox="0 0 24 24">
-    <polygon points="12,4 4,20 20,20" fill="black"/>
+    <!-- 初始朝下 -->
+    <polygon points="12,20 4,4 20,4" fill="black"/>
   </svg>
 </div>
 <div class="contact">
@@ -289,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
