@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta charset="utf-8" />
+<style>
+      
+
+  a {
+      text-decoration: none;
+      color: inherit;
+  }
+  a.underline {
+      text-decoration: underline;
+    }
+  .header{
+      height: 100px;
+      width: 100%;
+      background-color: blue;
+	  position:fixed;
+  }
+	.logo {
+  margin-top: 160px;
+}
+
+  .option {
+      float: left;
+      width: 150px;
+      border: 2px solid white;
+      text-align: center;
+      margin-top: 5px;
+      margin-left: 10px;
+      color: white;
+      text-decoration: none;
+      background: linear-gradient(to right, blue, purple);
+      transition: background 0.5s ease;
+  }
+
+  .option:hover  {
+      background: purple;
+  }
+  
+
+  .option-cont {
+      list-style-type: none;
+      padding: 0;
+      display: none;
+  }
+
+  .option-cont li {
+      background-color: white;
+      color: black;
+      border: 1px solid #808080;
+      padding: 10px;
+  }
+  .option-cont li:hover{
+        background-color:purple;
+       }
+
+  .active {
+      display: block;
+  }
+
+  .self-introduction {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .self-introduction h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+  }
+
+  .self-introduction p {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 15px;
+  }
+
+  @media only screen and (max-width: 480px) {
+  .header{
+        height:150px;
+  }
+      body {
+          font-size: 100%;
+      }
+  }
+</style>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#sel").on({
+        "mouseenter":fnToggleClass,
+        "mouseleave":fnToggleClass
+      });
+    });
+    function fnToggleClass(){
+        $("#about").toggleClass("active");
+    }
+    
+</script>
+</head>
+<body>
+    <img src="fig.jpg" style="width:90%;" ><br>
+<div class="header">
+	
+        <div>
+          <a href="index.html" class="option"><p>首頁</p></a>
+        </div>
+        <div id="sel" class="option">
+            <p>關於我們</p>
+            <ul id="about" class="option-cont">
+                <a href="introduction.html"><li>簡介</li></a>
+                <a href="staff.html" ><li>公司人員</li></a>
+		<a href="product.html"><li>產品訊息</li></a>
+
+            </ul>      
+        </div>
+	
+     </div>
+	<img src="yang.jpg" class="logo"><br>
+<div  class="self-introduction">
+    <h2>成員介紹1</h2>
+  <p>嗨，我是成洋，一名熱愛寫程式的人。</p>
+  <p>大家好，我是成洋，對於工作抱持熱誠，喜歡嘗試新事物，也對於新技術很感興趣，認真負責，視工作為第一要務，有時後會做一些基本程式練習，目前還在自學程式中，希望應徵軟體工程師的職位，感謝大家指教</p>
+<p>學歷:華梵大學-資訊管理學系</p>
+<p>經歷:貿易公司-業務助理</p>
+<p>工作技能:office軟體應用,c,c++,java,python
+<p>語言能力: 英文-略懂,中文-中等
+</div>
+<div class="contact">
+  <h3>聯絡資訊</h3>
+  <p>手機：0905102218</p>
+  <p>電子信箱：<a href="mailto:a83041756@yahoo.com.tw" class="underline">a83041756@yahoo.com.tw</a></p>
+</div>
+<div><p>© 2023 小洋生活空間</p></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

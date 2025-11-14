@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta charset="utf-8" />
+<style>
+a {
+  text-decoration: none; /* 移除底線 */
+  color: inherit; /* 繼承父元素的文字顏色 */
+}
+a.underline {
+      text-decoration: underline;
+    }
+     .header{
+        height:100px;
+        width:100%;
+        background-color:blue;
+		position:fixed;
+		
+    }
+	
+    .option{
+		 
+        float: left;
+        width:150px;
+    border:2px solid white;
+        text-align:center;
+        margin-top:5px;
+        margin-left:10px;
+        color:white;
+        text-decoration: none;
+        background: linear-gradient(to right, blue, purple);
+        transition: background 0.5s ease;
+
+    }
+    .option:hover  {
+                      background: purple;
+}
+
+    
+    
+    .option-cont{
+      
+       list-style-type:none;
+        padding:0;
+        display:none;
+  }
+   .option-cont li{
+        background-color:white;
+        color: black;
+        border:1px solid #808080;
+        padding: 10px;
+       }
+       .option-cont li:hover{
+        background-color:purple;
+       }
+       .active{
+        display:block;
+       }
+       .self-introduction {
+		   margin-top:150px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.self-introduction h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.self-introduction p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+#scrollBox {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(145deg, #4a90e2, #357ABD);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.1s ease;
+}
+
+#scrollBox.active, #scrollBox:active {
+  transform: scale(0.9);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+#scrollArrow {
+  transition: transform 0.3s;
+}
+
+#scrollArrow.up {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
+    @media only screen and (max-width: 480px) {
+  /* Styles for screens up to 480px wide (e.g., smartphones) */
+ .header{
+        height:150px;
+  }
+  body {
+    font-size: 100%;
+  }
+  .change {
+    width:90%;
+
+  }
+		.container {
+  flex-direction: column; 
+}
+
+    
+
+ 
+}
+</style>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#sel").on({
+        "mouseenter":fnToggleClass,
+        "mouseleave":fnToggleClass
+      });
+    });
+    function fnToggleClass(){
+        $("#about").toggleClass("active");
+    }
+    
+</script>
+<script>
+function downloadPDF() {
+  // 替換為你的PDF文件的URL
+  var pdfUrl = 'cambridge_cs.pdf';
+  
+  // 使用 JavaScript 打開新窗口來顯示 PDF 文件
+  window.open(pdfUrl);
+}
+function downloadPDF1() {
+  // 替換為你的PDF文件的URL
+  var pdfUrl = 'minix_os.pdf';
+  
+  // 使用 JavaScript 打開新窗口來顯示 PDF 文件
+  window.open(pdfUrl);
+}
+</script>
+<script>
+let scrollInterval;
+let speedTimer;
+let speed = 2;
+
+function checkScroll() {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const windowHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+  const arrow = document.getElementById("scrollArrow");
+  if (scrollTop + windowHeight >= docHeight - 2) {
+    arrow.classList.add("up");
+  } else {
+    arrow.classList.remove("up");
+  }
+}
+
+function startScroll() {
+  stopScroll();
+  document.getElementById("scrollBox").classList.add("active");
+  speed = 2; // 重置初始速度
+
+  const arrow = document.getElementById("scrollArrow");
+
+  scrollInterval = setInterval(() => {
+    if (arrow.classList.contains("up")) {
+      window.scrollBy(0, -speed);
+    } else {
+      window.scrollBy(0, speed);
+    }
+  }, 16);
+
+  // 每隔 0.5 秒加速
+  speedTimer = setInterval(() => {
+    speed += 25;        // 速度增加
+    if (speed > 50) speed = 50; // 最大速度限制
+  }, 500);
+}
+
+function stopScroll() {
+  clearInterval(scrollInterval);
+  clearInterval(speedTimer);
+  document.getElementById("scrollBox").classList.remove("active");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const box = document.getElementById("scrollBox");
+
+  window.addEventListener('scroll', checkScroll);
+  window.addEventListener('resize', checkScroll);
+  checkScroll();
+
+  // 桌機滑鼠
+  box.addEventListener('mousedown', startScroll);
+  box.addEventListener('mouseup', stopScroll);
+  box.addEventListener('mouseleave', stopScroll);
+
+  // 手機觸控
+  box.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    startScroll();
+  }, {passive:false});
+
+  box.addEventListener('touchend', stopScroll);
+  box.addEventListener('touchcancel', stopScroll);
+});
+</script>
+</head>
+<body>
+<img src="fig.jpg" style="width:90%;" ><br>
+<div class="header">
+	
+        <div>
+          <a href="index.html" class="option"><p>首頁</p></a>
+        </div>
+        <div id="sel" class="option">
+            <p>關於我們</p>
+            <ul id="about" class="option-cont">
+              <a href="introduction.html"><li>簡介</li></a>
+                <a href="staff.html" ><li>公司人員</li></a>
+                <a href="product.html" ><li>產品訊息</li></a>
+                 
+            </ul>      
+        </div>
+	
+       
+     </div>
+     <div class="container">
+<div  class="self-introduction">
+    <h2>書籍分享</h2>
+  <p>這是計算機概論書籍(英文版)</p>
+  <img src="cambridge_cs.png" ><br>計算機概論</img><br>
+  <button onclick="downloadPDF()">下載pdf檔</button> 
+</div>
+<div  class="self-introduction">
+  <h2>書籍分享</h2>
+<p>這是作業系統書籍(英文版)</p>
+<img src="minix_os.png" ><br>minix作業系統</img><br>
+<button onclick="downloadPDF1()">下載pdf檔</button> 
+</div>
+</div>
+<div id="scrollBox">
+  <svg id="scrollArrow" width="24" height="24" viewBox="0 0 24 24">
+    <!-- 初始朝下 -->
+    <polygon points="12,20 4,4 20,4" fill="black"/>
+  </svg>
+</div>
+<div class="contact">
+  <h3>聯絡資訊</h3>
+  <p>手機：0905102218</p>
+  <p>電子信箱：<a href="mailto:a83041756@yahoo.com.tw" class="underline">a83041756@yahoo.com.tw</a></p>
+</div>
+<div><p>© 2023 小洋生活空間</p></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
