@@ -174,10 +174,11 @@ function checkScroll() {
   const docHeight = document.documentElement.scrollHeight;
   const arrow = document.getElementById("scrollArrow");
   if (scrollTop + windowHeight >= docHeight - 2) {
-    arrow.classList.add("up");
-  } else {
-    ;
 	  arrow.classList.remove("up");
+    
+  } else {
+    arrow.classList.add("up");
+	  
   }
 }
 
