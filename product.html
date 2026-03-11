@@ -173,7 +173,7 @@ function checkScroll() {
   const windowHeight = window.innerHeight;
   const docHeight = document.documentElement.scrollHeight;
   const arrow = document.getElementById("scrollArrow");
-  if (scrollTop + windowHeight >= docHeight) {
+  if (scrollTop + windowHeight-2 >= docHeight) {
 	  arrow.classList.remove("up");
     
   } else {
@@ -280,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
