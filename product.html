@@ -190,9 +190,9 @@ function startScroll() {
 
   scrollInterval = setInterval(() => {
     if (arrow.classList.contains("up")) {
-      window.scrollBy(0, speed);
-    } else {
       window.scrollBy(0, -speed);
+    } else {
+      window.scrollBy(0, speed);
     }
   }, 16);
 
@@ -279,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
