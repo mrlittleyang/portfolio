@@ -174,9 +174,9 @@ function checkScroll() {
   const docHeight = document.documentElement.scrollHeight;
   const arrow = document.getElementById("scrollArrow");
   if (scrollTop + windowHeight <= docHeight - 2) {
-    arrow.classList.add("down");
+    arrow.classList.add("up");
   } else {
-    arrow.classList.remove("down");
+    arrow.classList.remove("up");
   }
 }
 
@@ -188,7 +188,7 @@ function startScroll() {
   const arrow = document.getElementById("scrollArrow");
 
   scrollInterval = setInterval(() => {
-    if (arrow.classList.contains("down")) {
+    if (arrow.classList.contains("up")) {
       window.scrollBy(0, speed);
     } else {
       window.scrollBy(0, -speed);
@@ -278,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div><p>© 2023 小洋生活空間</p></div>
 </body>
 </html>
+
 
 
 
